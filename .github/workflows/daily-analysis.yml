@@ -32,12 +32,12 @@ jobs:
           token: ${{ secrets.PAT }}
           branch: auto-update-daily
           commit-message: "Daily news update"
-          title: "📰 Daily News Analysis - ${{ env.DATE }}"
+          title: "📰 Daily News Analysis"
           body: |
             Automated news analysis from global RSS feeds using BERTopic.
 
-            📊 Results: results/daily/$(date +%Y-%m-%d)/
-            📄 Post: blog/content/posts/daily-$(date +%Y-%m-%d).md
+            📊 Results: results/daily/
+            📄 Post: blog/content/posts/
 
             _This PR is updated daily. Merge when ready._
           delete-branch: true
@@ -45,6 +45,12 @@ jobs:
             data/daily/
             results/daily/
             blog/content/posts/
+
+      - name: Setup Hugo
+        uses: peaceiris/actions-hugo@v2
+        with:
+          hugo-version: 'latest'
+          extended: true
 
       - name: Build Hugo site
         working-directory: blog
