@@ -59,7 +59,7 @@ jobs:
       - name: Build Hugo site
         run: |
           cd blog
-          hugo --source . --destination ../docs --verbose
+          hugo --source . --destination ../docs 
 
       # 9. Verifica que docs/ se haya creado
       - name: Check if docs was generated
