@@ -28,6 +28,7 @@ import plotly.express as px
 from datetime import datetime
 import os
 import glob
+import shutil
 
 
 # ===================================
@@ -45,6 +46,25 @@ os.makedirs(DATA_DIR, exist_ok=True)
 os.makedirs(RESULTS_DIR, exist_ok=True)
 os.makedirs(DOCS_DIR, exist_ok=True)
 
+
+def copy_results_to_docs(TODAY):
+    """Copia los gráficos y HTML de resultados a docs/assets/ para que GitHub Pages los sirva."""
+    os.makedirs(f"docs/assets/{TODAY}", exist_ok=True)
+
+    # Archivos a copiar
+    files_to_copy = [
+        f"results/daily/{TODAY}/topic_evolution.html",
+        f"results/daily/{TODAY}/cooccurrence.png",
+        f"results/daily/{TODAY}/semantic_similarity.png"
+    ]
+
+    for src in files_to_copy:
+        if os.path.exists(src):
+            dst = f"docs/assets/{TODAY}/" + os.path.basename(src)
+            shutil.copy(src, dst)
+            print(f"[+] Copiado: {src} → {dst}")
+        else:
+            print(f"[!] No encontrado: {src}")
 
 # ===================================
 # 2. LOAD RSS SOURCES
@@ -224,13 +244,13 @@ def generate_daily_html(df, topic_model, topic_evolution, topic_labels, TODAY):
     </ul>
 
     <h2>📊 Topic Evolution Over Time</h2>
-    <iframe src="../results/daily/{TODAY}/topic_evolution.html" title="Topic Evolution"></iframe>
+    <iframe src="assets/{TODAY}/topic_evolution.html" title="Topic Evolution"></iframe>
 
     <h2>🔗 Topic Co-occurrence Matrix</h2>
-    <p><img src="../results/daily/{TODAY}/cooccurrence.png" alt="Co-occurrence" style="max-width:100%;"></p>
+    <p><img src="assets/{TODAY}/cooccurrence.png" alt="Co-occurrence" style="max-width:100%;"></p>
 
     <h2>🧠 Semantic Similarity</h2>
-    <p><img src="../results/daily/{TODAY}/semantic_similarity.png" alt="Semantic Similarity" style="max-width:100%;"></p>
+    <p><img src="assets/{TODAY}/semantic_similarity.png" alt="Semantic Similarity" style="max-width:100%;"></p>
 
     <hr>
     <p><a href="index.html">← Back to all days</a></p>
@@ -337,7 +357,10 @@ def main():
     # 9. Topic evolution plot
     plot_topic_evolution(topic_evolution, topic_model.topic_labels_, TODAY)
 
-    # 10. Generate HTML reports
+    # 10. Copy results to docs for web access
+    copy_results_to_docs(TODAY)
+
+    # 11. Generate HTML reports
     print("[+] Generating HTML reports in docs/...")
     generate_daily_html(df, topic_model, topic_evolution, topic_model.topic_labels_, TODAY)
     generate_index_html()
