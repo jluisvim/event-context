@@ -4,7 +4,8 @@ title: "Event Context | Global News Intelligence"
 theme: "terminal"
 
 # Permite archivos estáticos
-staticDir = ["static"]
+staticDir:
+  - static
 
 # Para incrustar HTML
 markup:
