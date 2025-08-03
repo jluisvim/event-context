@@ -1,6 +1,6 @@
-baseURL: "https://tuusuario.github.io/"
+baseURL: "https://jluisvim.github.io/event-context/"
 languageCode: en-us
-title: "Global News Intelligence"
+title: "Event Context | Global News Intelligence"
 theme: "terminal"
 
 # Permite archivos estáticos
@@ -11,3 +11,11 @@ markup:
   goldmark:
     renderer:
       unsafe: true
+
+params:
+  env: production
+  title: Event Context
+  description: "Daily AI-powered analysis of global news and event relationships."
+  author: JLuisVM
+  showReadingTime: true
+  hideFooter: false
