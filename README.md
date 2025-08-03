@@ -69,14 +69,17 @@ Each day, you get:
 ```bash
 git clone https://github.com/jluisvim/event-context.git
 cd event-context
+```
 
 ### Install dependencies
 ```bash
 pip3 install -r requirements.txt
+```
 
 ### Run the analyzer
 ```bash
 python3 script/daily_analyzer.py
+```
 
 ---
 
