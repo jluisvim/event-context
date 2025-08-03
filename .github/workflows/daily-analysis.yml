@@ -42,6 +42,7 @@ jobs:
             _This PR is updated daily. Merge when ready._
           delete-branch: true
           add-paths: |
+            docs/
             data/daily/
             results/daily/
             blog/content/posts/
