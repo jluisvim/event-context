@@ -2,12 +2,13 @@ name: Daily News Analysis
 
 on:
   schedule:
-    - cron: '0 9 * * *'  # Every day at 9 AM UTC
+    - cron: '0 9 * * *'  # 9 AM UTC daily
   workflow_dispatch:
 
 jobs:
   analyze:
     runs-on: ubuntu-latest
+
     steps:
       - uses: actions/checkout@v3
 
@@ -18,26 +19,22 @@ jobs:
 
       - name: Install dependencies
         run: |
-          pip install feedparser pandas bertopic scikit-learn sentence-transformers seaborn matplotlib plotly networkx pyyaml
+          pip install -r requirements.txt
 
-      - name: Run daily analyzer
-        run: python3 script/daily_analyzer.py
+      - name: Run news analyzer
+        run: |
+          python3 script/daily_analyzer.py
 
-      - name: Deploy Hugo blog
-        uses: peaceiris/actions-hugo@v2
-        with:
-          hugo-version: 'latest'
-          # extra-files: config.yml  # si usas hugo
-
-      # ✅ Elimina todo el bloque anterior de git push
-      # y pon este:
+      - name: Set date variable
+        run: echo "DATE=$(date +%Y-%m-%d)" >> $GITHUB_ENV
 
       - name: Create Pull Request with daily results
         uses: peter-evans/create-pull-request@v7
         with:
           token: ${{ secrets.PAT }}
-          commit-message: "Daily update: $(date +%Y-%m-%d)"
-          title: "Daily News Analysis - $(date +%Y-%m-%d)"
+          branch: auto-update-${{ env.DATE }}
+          commit-message: Daily update: ${{ env.DATE }}
+          title: Daily News Analysis - ${{ env.DATE }}
           body: |
             Automated news analysis from global RSS feeds.
 
@@ -45,9 +42,8 @@ jobs:
             - Generated co-occurrence and semantic similarity matrices
             - Published daily report
 
-            📊 Results: `results/daily/{{ '{{' }} date +%Y-%m-%d {{ '}}' }}/`
-            📄 Post: `blog/content/posts/daily-{{ '{{' }} date +%Y-%m-%d {{ '}}' }}.md`
-          branch: auto-update-$(date +%Y-%m-%d)
+            📊 Results: results/daily/${{ env.DATE }}/  
+            📄 Post: blog/content/posts/daily-${{ env.DATE }}.md
           delete-branch: true
           add-paths: |
             data/daily/
