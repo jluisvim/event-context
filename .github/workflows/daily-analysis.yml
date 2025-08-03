@@ -32,6 +32,28 @@ jobs:
         run: |
           python script/daily_analyzer.py
 
+      - name: Setup Hugo
+        uses: peaceiris/actions-hugo@v2
+        with:
+          hugo-version: 'latest'
+          extended: true
+
+      - name: Build Hugo site
+        working-directory: blog
+        run: |
+          cd blog
+          hugo --source . --destination ../docs --verbose
+
+      - name: Check if docs was created
+        run: |
+          if [ -d "docs" ]; then
+            echo "✅ docs/ created with $(ls docs | wc -l) files"
+            find docs -type f | head -10
+          else
+            echo "❌ docs/ was not created!"
+            exit 1
+          fi
+
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v7
         with:
@@ -48,18 +70,9 @@ jobs:
             _This PR is updated daily. Merge when ready._
           delete-branch: true
           add-paths: |
+            docs/
             data/daily/
             results/daily/
             blog/content/posts/
 
 
-      - name: Setup Hugo
-        uses: peaceiris/actions-hugo@v2
-        with:
-          hugo-version: 'latest'
-          extended: true
-
-      - name: Build Hugo site
-        working-directory: blog
-        run: |
-          hugo --source . --destination ../docs
