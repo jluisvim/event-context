@@ -2,13 +2,12 @@ name: Daily News Analysis
 
 on:
   schedule:
-    - cron: '0 9 * * *'  # 9 AM UTC daily
+    - cron: '0 9 * * *'
   workflow_dispatch:
 
 jobs:
   analyze:
     runs-on: ubuntu-latest
-
     steps:
       - uses: actions/checkout@v3
 
@@ -21,14 +20,13 @@ jobs:
         run: |
           pip install -r requirements.txt
 
-      - name: Run news analyzer
-        run: |
-          python3 script/daily_analyzer.py
+      - name: Run analyzer
+        run: python3 script/daily_analyzer.py
 
-      - name: Set date variable
+      - name: Set date
         run: echo "DATE=$(date +%Y-%m-%d)" >> $GITHUB_ENV
 
-      - name: Create Pull Request with daily results
+      - name: Create Pull Request
         uses: peter-evans/create-pull-request@v7
         with:
           token: ${{ secrets.PAT }}
@@ -36,13 +34,9 @@ jobs:
           commit-message: Daily update: ${{ env.DATE }}
           title: Daily News Analysis - ${{ env.DATE }}
           body: |
-            Automated news analysis from global RSS feeds.
+            Automated daily news analysis.
 
-            - Collected and classified news using BERTopic
-            - Generated co-occurrence and semantic similarity matrices
-            - Published daily report
-
-            📊 Results: results/daily/${{ env.DATE }}/  
+            📊 Results: results/daily/${{ env.DATE }}/
             📄 Post: blog/content/posts/daily-${{ env.DATE }}.md
           delete-branch: true
           add-paths: |
