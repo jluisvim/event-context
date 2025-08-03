@@ -23,7 +23,7 @@ jobs:
 
       - name: Run news analyzer
         run: |
-          python3 script/daily_analyzer.py
+          python script/daily_analyzer.py
 
       - name: Set date variable
         run: echo "DATE=$(date +%Y-%m-%d)" >> $GITHUB_ENV
