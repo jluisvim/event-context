@@ -63,26 +63,6 @@ Each day, you get:
 
 ---
 
-## 🚀 Quick Start
-
-### Clone the repo
-```bash
-git clone https://github.com/jluisvim/event-context.git
-cd event-context
-```
-
-### Install dependencies
-```bash
-pip3 install -r requirements.txt
-```
-
-### Run the analyzer
-```bash
-python3 script/daily_analyzer.py
-```
-
----
-
 ## 🌟 Future Improvements
 
 - [ ] **Multilingual news processing** – Extend analysis to non-English RSS feeds using multilingual embedding models (e.g., `paraphrase-multilingual-MiniLM-L12-v2`)
