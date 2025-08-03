@@ -2,77 +2,97 @@ name: Daily News Analysis
 
 on:
   schedule:
-    - cron: '0 6 * * *'  # 6 AM UTC daily
-  workflow_dispatch:
+    - cron: '0 9 * * *'  # Ejecuta a las 9 AM UTC todos los días
+  workflow_dispatch:     # Permite ejecución manual
 
 jobs:
   analyze:
     runs-on: ubuntu-latest
 
     steps:
+      # 1. Clona el repositorio (con submódulos)
       - name: Checkout code
         uses: actions/checkout@v3
+        with:
+          submodules: recursive  # ← Clona themes/terminal si es submódulo
 
-      - name: Restore theme submodule
+      # 2. Verifica que la carpeta blog/ existe
+      - name: Check blog directory
         run: |
-          git config --global protocol.version 2
-          git submodule init
-          git submodule update --remote --recursive
+          if [ ! -d "blog" ]; then
+            echo "❌ Error: La carpeta 'blog/' no existe en el repositorio."
+            echo "Asegúrate de hacer 'git add blog' y 'git push'."
+            exit 1
+          else
+            echo "✅ Carpeta 'blog/' encontrada."
+            ls -la blog/
+          fi
 
+      # 3. Instala Python
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
           python-version: '3.11'
 
+      # 4. Instala dependencias
       - name: Install dependencies
         run: |
           pip install -r requirements.txt
 
+      # 5. Ejecuta el análisis de noticias
       - name: Run news analyzer
         run: |
           python script/daily_analyzer.py
 
+      # 6. Guarda la fecha actual
+      - name: Set current date
+        run: echo "DATE=$(date +%Y-%m-%d)" >> $GITHUB_ENV
+
+      # 7. Instala Hugo
       - name: Setup Hugo
         uses: peaceiris/actions-hugo@v2
         with:
           hugo-version: 'latest'
           extended: true
 
+      # 8. Construye el sitio Hugo
       - name: Build Hugo site
-        working-directory: blog
         run: |
           cd blog
           hugo --source . --destination ../docs --verbose
 
-      - name: Check if docs was created
+      # 9. Verifica que docs/ se haya creado
+      - name: Check if docs was generated
         run: |
           if [ -d "docs" ]; then
-            echo "✅ docs/ created with $(ls docs | wc -l) files"
-            find docs -type f | head -10
+            echo "✅ Carpeta 'docs/' creada con éxito."
+            find docs -type f | head -20
           else
-            echo "❌ docs/ was not created!"
+            echo "❌ Error: 'docs/' no se generó. Revisa los errores de Hugo."
             exit 1
           fi
 
+      # 10. Crea Pull Request con los resultados
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v7
         with:
           token: ${{ secrets.PAT }}
           branch: auto-update-daily
-          commit-message: "Daily news update"
-          title: "📰 Daily News Analysis"
+          commit-message: "Daily update: ${{ env.DATE }}"
+          title: "📰 Daily News Analysis - ${{ env.DATE }}"
           body: |
-            Automated news analysis from global RSS feeds using BERTopic.
+            Automated news analysis from global RSS feeds.
 
-            📊 Results: results/daily/
-            📄 Post: blog/content/posts/
+            - Collected and classified news using BERTopic
+            - Generated topic evolution, co-occurrence, and similarity
+            - Published daily report
+
+            📊 Results: results/daily/${{ env.DATE }}/
+            📄 Post: blog/content/posts/daily-${{ env.DATE }}.md
 
             _This PR is updated daily. Merge when ready._
           delete-branch: true
           add-paths: |
             docs/
-            data/daily/
-            results/daily/
             blog/content/posts/
-
-
+            results/daily/
