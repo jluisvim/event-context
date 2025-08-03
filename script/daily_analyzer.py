@@ -157,6 +157,9 @@ Collected **{len(df)} news articles** from international sources.
 
 ### 🔝 Top Topics Today
 """
+
+    base_url = "/event-context"  # ← Cambia si tu repositorio se llama diferente
+
     for topic, count in top_topics.items():
         summary_md += f"- **{topic}**: {count} articles\n"
 
@@ -168,10 +171,10 @@ Collected **{len(df)} news articles** from international sources.
 <iframe src="/results/daily/{TODAY}/topic_evolution.html" width="100%" height="500"></iframe>
 
 #### Co-occurrence Matrix
-![Co-occurrence]({{{{ '/results/daily/{TODAY}/cooccurrence.png' | relative_url }}}})
+![Co-occurrence]({base_url}/results/daily/{TODAY}/cooccurrence.png)
 
 #### Semantic Similarity
-![Similarity]({{{{ '/results/daily/{TODAY}/semantic_similarity.png' | relative_url }}}})
+![Similarity]({base_url}/results/daily/{TODAY}/semantic_similarity.png)
 
 ---
 
