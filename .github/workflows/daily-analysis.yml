@@ -26,25 +26,20 @@ jobs:
         run: |
           python script/daily_analyzer.py
 
-      - name: Set current date
-        run: echo "DATE=$(date +%Y-%m-%d)" >> $GITHUB_ENV
-
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v7
         with:
           token: ${{ secrets.PAT }}
-          branch: auto-update-${{ env.DATE }}
-          commit-message: Daily update: ${{ env.DATE }}
-          title: Daily News Analysis - ${{ env.DATE }}
+          branch: auto-update-daily
+          commit-message: "Daily news update"
+          title: "📰 Daily News Analysis - ${{ env.DATE }}"
           body: |
-            Automated news analysis from global RSS feeds.
+            Automated news analysis from global RSS feeds using BERTopic.
 
-            - Collected and classified news using BERTopic
-            - Generated co-occurrence and semantic similarity matrices
-            - Published daily report
+            📊 Results: results/daily/$(date +%Y-%m-%d)/
+            📄 Post: blog/content/posts/daily-$(date +%Y-%m-%d).md
 
-            📊 Results: results/daily/${{ env.DATE }}/
-            📄 Post: blog/content/posts/daily-${{ env.DATE }}.md
+            _This PR is updated daily. Merge when ready._
           delete-branch: true
           add-paths: |
             data/daily/
