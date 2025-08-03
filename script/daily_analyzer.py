@@ -165,9 +165,7 @@ Collected **{len(df)} news articles** from international sources.
 ### 📊 Visualizations
 
 #### Topic Evolution
-{{{{< rawhtml >}}}}
 <iframe src="/results/daily/{TODAY}/topic_evolution.html" width="100%" height="500"></iframe>
-{{{{< /rawhtml >}}}}
 
 #### Co-occurrence Matrix
 ![Co-occurrence]({{{{ '/results/daily/{TODAY}/cooccurrence.png' | relative_url }}}})
