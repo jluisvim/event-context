@@ -21,7 +21,7 @@ jobs:
           pip install feedparser pandas bertopic scikit-learn sentence-transformers seaborn matplotlib plotly networkx pyyaml
 
       - name: Run daily analyzer
-        run: python script/daily_analyzer.py
+        run: python3 script/daily_analyzer.py
 
       - name: Deploy Hugo blog
         uses: peaceiris/actions-hugo@v2
