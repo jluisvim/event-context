@@ -29,16 +29,27 @@ jobs:
           hugo-version: 'latest'
           # extra-files: config.yml  # si usas hugo
 
-      - name: Commit and push if there are changes
-        run: |
-          git config user.name "jluisvim"
-          git config user.email "jluis.vim@protonmail.com"
-          # Check if there are changes
-          git add .
-          if ! git diff --quiet --cached; then
-            git commit -m "Daily update: $(date +%Y-%m-%d)"
-            git remote set-url origin https://x-access-token:${{ secrets.PAT }}@github.com/jluisvim/event-context.git
-            git push origin master
-          else
-            echo "No changes to commit"
-          fi
+      # ✅ Elimina todo el bloque anterior de git push
+      # y pon este:
+
+      - name: Create Pull Request with daily results
+        uses: peter-evans/create-pull-request@v7
+        with:
+          token: ${{ secrets.PAT }}
+          commit-message: "Daily update: $(date +%Y-%m-%d)"
+          title: "Daily News Analysis - $(date +%Y-%m-%d)"
+          body: |
+            Automated news analysis from global RSS feeds.
+
+            - Collected and classified news using BERTopic
+            - Generated co-occurrence and semantic similarity matrices
+            - Published daily report
+
+            📊 Results: `results/daily/{{ '{{' }} date +%Y-%m-%d {{ '}}' }}/`
+            📄 Post: `blog/content/posts/daily-{{ '{{' }} date +%Y-%m-%d {{ '}}' }}.md`
+          branch: auto-update-$(date +%Y-%m-%d)
+          delete-branch: true
+          add-paths: |
+            data/daily/
+            results/daily/
+            blog/content/posts/
