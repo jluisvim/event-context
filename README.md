@@ -63,7 +63,7 @@ Each day, you get:
 
 ---
 
-## Quick Start
+## 🚀 Quick Start
 
 ### Clone the repo
 ```bash
@@ -83,7 +83,7 @@ python3 script/daily_analyzer.py
 
 ---
 
-## Future Improvements
+## 🌟 Future Improvements
 
 - [ ] **Multilingual news processing** – Extend analysis to non-English RSS feeds using multilingual embedding models (e.g., `paraphrase-multilingual-MiniLM-L12-v2`)
 - [ ] **GDELT integration** – Incorporate structured global event data from the GDELT Project for deeper geopolitical context
