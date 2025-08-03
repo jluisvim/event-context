@@ -1,7 +1,6 @@
 # 🌍 Event Context: Global News Intelligence Engine
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![GitHub Actions](https://github.com/jluisvim/event-context/workflows/Daily%20Analysis/badge.svg)](https://github.com/jluisvim/event-context/actions)
 [![Open Issues](https://img.shields.io/github/issues/jluisvim/event-context)](https://github.com/jluisvim/event-context/issues)
 
 **Event Context** is an automated news analysis system that collects global headlines from RSS feeds, applies AI-driven topic modeling (BERTopic), and generates daily intelligence reports with interactive visualizations.
@@ -64,9 +63,37 @@ Each day, you get:
 
 ---
 
-## 🚀 Quick Start
+## Quick Start
 
-### 1. Clone the repo
+### Clone the repo
 ```bash
 git clone https://github.com/jluisvim/event-context.git
 cd event-context
+
+### Install dependencies
+```bash
+pip3 install -r requirements.txt
+
+### Run the analyzer
+```bash
+python3 script/daily_analyzer.py
+
+---
+
+## Future Improvements
+
+- [ ] **Multilingual news processing** – Extend analysis to non-English RSS feeds using multilingual embedding models (e.g., `paraphrase-multilingual-MiniLM-L12-v2`)
+- [ ] **GDELT integration** – Incorporate structured global event data from the GDELT Project for deeper geopolitical context
+- [ ] **Sentiment analysis per topic** – Add emotional tone detection using VADER or transformer-based sentiment models
+- [ ] **Topic alert system** – Get notified when specific topics (e.g., "conflict", "elections") emerge or spike
+- [ ] **Searchable archive** – Add full-text search across historical reports using Lunr.js or FlexSearch
+- [ ] **Geospatial visualization** – Map news coverage by country using interactive maps (Plotly, Leaflet)
+- [ ] **User feedback loop** – Allow readers to label topics or relevance for semi-supervised improvement
+
+---
+
+## 📎 Author
+
+**JLVM**  
+[GitHub @jluisvim](https://github.com/jluisvim)  
+
