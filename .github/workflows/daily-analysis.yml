@@ -2,14 +2,20 @@ name: Daily News Analysis
 
 on:
   schedule:
-    - cron: '0 9 * * *'
-  workflow_dispatch:
+    - cron: '0 9 * * *'  # Ejecuta a las 9 AM UTC todos los días
+  workflow_dispatch:     # Permite ejecución manual
 
 jobs:
   analyze:
     runs-on: ubuntu-latest
+
+    # Definimos variables de entorno
+    env:
+      DATE: ${{ env.DATE }}  # Hereda del paso anterior
+
     steps:
-      - uses: actions/checkout@v3
+      - name: Checkout code
+        uses: actions/checkout@v3
 
       - name: Set up Python
         uses: actions/setup-python@v4
@@ -18,12 +24,14 @@ jobs:
 
       - name: Install dependencies
         run: |
+          python -m pip install --upgrade pip
           pip install -r requirements.txt
 
-      - name: Run analyzer
-        run: python3 script/daily_analyzer.py
+      - name: Run news analyzer
+        run: |
+          python script/daily_analyzer.py
 
-      - name: Set date
+      - name: Set current date
         run: echo "DATE=$(date +%Y-%m-%d)" >> $GITHUB_ENV
 
       - name: Create Pull Request
@@ -31,10 +39,14 @@ jobs:
         with:
           token: ${{ secrets.PAT }}
           branch: auto-update-${{ env.DATE }}
-          commit-message: Daily update: ${{ env.DATE }}
-          title: Daily News Analysis - ${{ env.DATE }}
+          commit-message: "Daily update: ${{ env.DATE }}"
+          title: "Daily News Analysis - ${{ env.DATE }}"
           body: |
-            Automated daily news analysis.
+            Automated news analysis from global RSS feeds.
+
+            - Collected and classified news using BERTopic
+            - Generated co-occurrence and semantic similarity matrices
+            - Published daily report
 
             📊 Results: results/daily/${{ env.DATE }}/
             📄 Post: blog/content/posts/daily-${{ env.DATE }}.md
