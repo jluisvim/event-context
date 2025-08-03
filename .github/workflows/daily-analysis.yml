@@ -2,7 +2,9 @@ name: Daily News Analysis
 
 on:
   schedule:
-    - cron: '0 9 * * *'
+    - cron: '0 2 * * *'
+    - cron: '0 10 * * *'
+    - cron: '0 18 * * *'
   workflow_dispatch:
 
 jobs:
@@ -25,18 +27,21 @@ jobs:
 
       - name: Set date
         run: echo "DATE=$(date +%Y-%m-%d)" >> $GITHUB_ENV
+          echo "TIME=$(date +%H:%M)" >> $GITHUB_ENV
 
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v7
         with:
           token: ${{ secrets.PAT }}
           branch: auto-update-daily
-          commit-message: "Daily update: ${{ env.DATE }}"
-          title: "📰 Daily News Analysis - ${{ env.DATE }}"
+          commit-message: "Daily update: ${{ env.DATE }} at ${{ env.TIME }} UTC"
+          title: "📰 Daily News Analysis - ${{ env.DATE }} (Run at ${{ env.TIME }} UTC)"
           body: |
-            Automated analysis with HTML output.
+            Automated analysis with HTML output (executed 3 times daily).
 
             📊 Report: docs/daily-${{ env.DATE }}.html
+
+            _This PR updates the daily reports. Merged changes are published via GitHub Pages._
           delete-branch: true
           add-paths: |
             docs/
