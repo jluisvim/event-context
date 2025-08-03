@@ -1,0 +1,38 @@
+name: Daily News Analysis
+
+on:
+  schedule:
+    - cron: '0 9 * * *'  # Every day at 9 AM UTC
+  workflow_dispatch:
+
+jobs:
+  analyze:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: |
+          pip install feedparser pandas bertopic scikit-learn sentence-transformers seaborn matplotlib plotly networkx pyyaml
+
+      - name: Run daily analyzer
+        run: python script/daily_analyzer.py
+
+      - name: Deploy Hugo blog
+        uses: peaceiris/actions-hugo@v2
+        with:
+          hugo-version: 'latest'
+          # extra-files: config.yml  # si usas hugo
+
+      - name: Commit results
+        run: |
+          git config user.name "jluisvim"
+          git config user.email "jluis.vim@protonmail.com"
+          git add .
+          git commit -m "Daily update: ${DATE}" || exit 0
+          git push

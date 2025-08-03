@@ -1,0 +1,13 @@
+baseURL: "https://tuusuario.github.io/"
+languageCode: en-us
+title: "Global News Intelligence"
+theme: "PaperMod"
+
+# Permite archivos estáticos
+staticDir = ["static"]
+
+# Para incrustar HTML
+markup:
+  goldmark:
+    renderer:
+      unsafe: true

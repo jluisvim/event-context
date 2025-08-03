@@ -1,0 +1,10 @@
+feedparser
+pandas
+bertopic
+scikit-learn
+sentence-transformers
+seaborn
+matplotlib
+plotly
+networkx
+pyyaml
