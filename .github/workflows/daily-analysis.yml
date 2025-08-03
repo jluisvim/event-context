@@ -13,6 +13,12 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
+      - name: Restore theme submodule
+        run: |
+          git config --global protocol.version 2
+          git submodule init
+          git submodule update --remote --recursive
+
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
@@ -42,10 +48,10 @@ jobs:
             _This PR is updated daily. Merge when ready._
           delete-branch: true
           add-paths: |
-            docs/
             data/daily/
             results/daily/
             blog/content/posts/
+
 
       - name: Setup Hugo
         uses: peaceiris/actions-hugo@v2
