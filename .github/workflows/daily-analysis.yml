@@ -45,3 +45,8 @@ jobs:
             data/daily/
             results/daily/
             blog/content/posts/
+
+      - name: Build Hugo site
+        working-directory: blog
+        run: |
+          hugo --source . --destination ../docs
