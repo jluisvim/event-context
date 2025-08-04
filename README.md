@@ -1,4 +1,4 @@
-# 🌍 EVENT-CONTEXT: Global News Intelligence Engine
+# 🌍 EVENT-CONTEXT
 ### *(Evolving Vectorized Entities in News Texts - CONtextual Topic EXtraction Technique)*
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
@@ -23,18 +23,18 @@ Designed for researchers, analysts, and globally-minded citizens, it transforms 
 - 🌐 **GitHub Pages ready**: no external hosting required
 - 💾 **Open & transparent**: all data and code are versioned
 
----
-
-## 🧠 How It Works
-
-1. **Collect**: Fetches news titles from RSS feeds (e.g., BBC, Reuters, NYT).
-2. **Cluster**: Uses BERTopic to group headlines into dynamic, interpretable topics.
-3. **Analyze**: Computes topic co-occurrence and semantic similarity.
-4. **Visualize**: Generates interactive Plotly charts and static heatmaps.
-5. **Publish**: Builds standalone HTML reports in `docs/`.
-6. **Automate**: GitHub Actions runs the pipeline daily and opens a PR.
-
-> All results are saved by date in `data/daily/`, `results/daily/`, and `docs/`.
+<!------->
+<!---->
+<!--## 🧠 How It Works-->
+<!---->
+<!--1. **Collect**: Fetches news titles from RSS feeds (e.g., BBC, Reuters, NYT).-->
+<!--2. **Cluster**: Uses BERTopic to group headlines into dynamic, interpretable topics.-->
+<!--3. **Analyze**: Computes topic co-occurrence and semantic similarity.-->
+<!--4. **Visualize**: Generates interactive Plotly charts and static heatmaps.-->
+<!--5. **Publish**: Builds standalone HTML reports in `docs/`.-->
+<!--6. **Automate**: GitHub Actions runs the pipeline daily and opens a PR.-->
+<!---->
+<!-- > All results are saved by date in `data/daily/`, `results/daily/`, and `docs/`.-->
 
 ---
 
