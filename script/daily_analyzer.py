@@ -210,7 +210,7 @@ def plot_semantic_similarity(sim_df, today):
 
 def generate_daily_html(df, topic_model, topic_evolution, topic_labels, TODAY):
     """Generate a standalone HTML report for today."""
-    top_topics = df['topic_name'].value_counts().head(5)
+    top_topics = df['topic_name'].value_counts().head(6)
     output_path = f"docs/daily-{TODAY}.html"
 
     # Start HTML content
@@ -253,7 +253,7 @@ def generate_daily_html(df, topic_model, topic_evolution, topic_labels, TODAY):
     <p><img src="assets/{TODAY}/semantic_similarity.png" alt="Semantic Similarity" style="max-width:100%;"></p>
 
     <hr>
-    <p><a href="index.html">← Back to all days</a></p>
+    <p><a href="index.html"> <<<  Back to all days</a></p>
 </body>
 </html>
     """

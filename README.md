@@ -1,9 +1,10 @@
-# 🌍 Event Context: Global News Intelligence Engine
+# 🌍 EVENT-CONTEXT: Global News Intelligence Engine
+### *(Evolving Vectorized Entities in News Texts - CONtextual Topic EXtraction Technique)*
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Open Issues](https://img.shields.io/github/issues/jluisvim/event-context)](https://github.com/jluisvim/event-context/issues)
 
-**Event Context** is an automated news analysis system that collects global headlines from RSS feeds, applies AI-driven topic modeling (BERTopic), and generates daily intelligence reports with interactive visualizations.
+**EVENT-CONTEXT** is an automated news analysis system that collects global headlines from RSS feeds, applies AI-driven topic modeling (BERTopic), and generates daily intelligence reports with interactive visualizations.
 
 Designed for researchers, analysts, and globally-minded citizens, it transforms raw news into structured insights — revealing trends, topic relationships, and global event dynamics.
 
@@ -34,6 +35,26 @@ Designed for researchers, analysts, and globally-minded citizens, it transforms 
 6. **Automate**: GitHub Actions runs the pipeline daily and opens a PR.
 
 > All results are saved by date in `data/daily/`, `results/daily/`, and `docs/`.
+
+---
+
+## 🔄 Workflow Diagram
+
+```mermaid
+flowchart TD
+    A[📡 1. Load RSS Feeds] --> B[🌐 2. Fetch News]
+    B --> C[🤖 3. BERTopic Modeling]
+    C --> D[📊 4. Topic Analysis]
+    D --> E[🔗 Co-occurrence Matrix]
+    D --> F[🧠 Semantic Similarity]
+    D --> G[📈 Topic Evolution]
+    E --> H[📂 Save Results]
+    F --> H
+    G --> H
+    H --> I[🌍 Generate HTML Report]
+    I --> J[📝 Update Index Page]
+    J --> K[🚀 GitHub Pages Deployment]
+```
 
 ---
 
