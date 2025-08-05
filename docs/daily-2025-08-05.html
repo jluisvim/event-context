@@ -5,41 +5,172 @@
     <meta charset="UTF-8">
     <title>Daily News Analysis - 2025-08-05</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
     <style>
-        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; 
-               line-height: 1.6; color: #333; max-width: 900px; margin: 40px auto; padding: 20px; }
-        h1, h2 { color: #1a1a1a; }
-        iframe { width: 100%; height: 500px; border: 1px solid #ddd; margin: 20px 0; }
-        .meta { color: #666; font-size: 0.9em; margin-bottom: 20px; }
-        .top-topic { background: #f8f9fa; padding: 10px 15px; border-left: 4px solid #0056b3; margin: 10px 0; }
+        :root {
+            --bg: #ffffff;
+            --text: #1a1a1a;
+            --accent: #0056b3;
+            --light: #f8f9fa;
+            --border: #e9ecef;
+        }
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            line-height: 1.7;
+            color: var(--text);
+            background: var(--bg);
+            margin: 0;
+            padding: 0;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        header {
+            text-align: center;
+            padding: 40px 20px;
+            background: linear-gradient(135deg, #0056b3 0%, #003d82 100%);
+            color: white;
+            border-radius: 12px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        h1 {
+            margin: 0;
+            font-weight: 600;
+            font-size: 2.2em;
+        }
+        .meta {
+            font-size: 0.9em;
+            opacity: 0.9;
+            margin-top: 8px;
+        }
+        .top-topics {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 40px 0;
+        }
+        .card {
+            background: var(--light);
+            border-radius: 10px;
+            padding: 20px;
+            border-left: 4px solid var(--accent);
+            transition: transform 0.2s;
+        }
+        .card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.05);
+        }
+        .card h3 {
+            margin: 0 0 10px 0;
+            font-size: 1.2em;
+            color: var(--accent);
+        }
+        .card .count {
+            margin: 0;
+            font-weight: 500;
+            color: #495057;
+        }
+        .section {
+            margin: 40px 0;
+            padding: 20px;
+            background: #fbfbfb;
+            border-radius: 10px;
+            border: 1px solid var(--border);
+        }
+        .section h2 {
+            color: var(--accent);
+            border-bottom: 2px solid var(--accent);
+            padding-bottom: 8px;
+            margin-top: 0;
+        }
+        iframe {
+            width: 100%;
+            height: 500px;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            margin: 15px 0;
+        }
+        img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        footer {
+            text-align: center;
+            margin-top: 50px;
+            padding: 20px;
+            color: #6c757d;
+            font-size: 0.9em;
+        }
+        @media (max-width: 768px) {
+            .top-topics {
+                grid-template-columns: 1fr;
+            }
+        }
     </style>
 </head>
 <body>
-    <h1>🌍 Daily News Analysis - 2025-08-05</h1>
-    <div class="meta">Generated: 2025-08-05 10:22:51 UTC | Articles: 460</div>
+    <header>
+        <h1>🌍 Daily News Analysis - 2025-08-05</h1>
+        <div class="meta">Generated: 2025-08-05 12:20:08 UTC | Articles: 490</div>
+    </header>
 
     <h2>🔝 Top Topics Today</h2>
-    <ul>
-<li><strong>-1_china_ai_news24_new</strong>: 128 articles</li>
-<li><strong>0_hong_kong_hong kong_china</strong>: 79 articles</li>
-<li><strong>1_russia_russian_ukraine_moscow</strong>: 64 articles</li>
-<li><strong>2_gaza_israeli_hostages_israel</strong>: 60 articles</li>
-<li><strong>3_tariffs_oil_trump_tariff</strong>: 34 articles</li>
-<li><strong>4_mexico_mexican_stocks_peso</strong>: 25 articles</li>
+    <div class="top-topics">
+        
+        <div class="card">
+            <h3>-1_china_japan_new_governor</h3>
+            <p class="count">147 articles</p>
+        </div>
+        
+        <div class="card">
+            <h3>0_hong_kong_hong kong_china</h3>
+            <p class="count">126 articles</p>
+        </div>
+        
+        <div class="card">
+            <h3>1_war_russia_russian_moscow</h3>
+            <p class="count">77 articles</p>
+        </div>
+        
+        <div class="card">
+            <h3>2_gaza_israeli_hostages_israel</h3>
+            <p class="count">52 articles</p>
+        </div>
+        
+        <div class="card">
+            <h3>3_arrested_rape_new zealand_granted</h3>
+            <p class="count">22 articles</p>
+        </div>
+        
+        <div class="card">
+            <h3>4_mexico_sheinbaum_shake_mexican</h3>
+            <p class="count">19 articles</p>
+        </div>
+        
+    </div>
 
-    </ul>
+    <div class="section">
+        <h2>📊 Topic Evolution Over Time</h2>
+        <iframe src="assets/2025-08-05/topic_evolution.html" title="Topic Evolution"></iframe>
+    </div>
 
-    <h2>📊 Topic Evolution Over Time</h2>
-    <iframe src="assets/2025-08-05/topic_evolution.html" title="Topic Evolution"></iframe>
+    <div class="section">
+        <h2>🔗 Topic Co-occurrence Matrix</h2>
+        <img src="assets/2025-08-05/cooccurrence.png" alt="Co-occurrence Matrix">
+    </div>
 
-    <h2>🔗 Topic Co-occurrence Matrix</h2>
-    <p><img src="assets/2025-08-05/cooccurrence.png" alt="Co-occurrence" style="max-width:100%;"></p>
+    <div class="section">
+        <h2>🧠 Semantic Similarity</h2>
+        <img src="assets/2025-08-05/semantic_similarity.png" alt="Semantic Similarity">
+    </div>
 
-    <h2>🧠 Semantic Similarity</h2>
-    <p><img src="assets/2025-08-05/semantic_similarity.png" alt="Semantic Similarity" style="max-width:100%;"></p>
-
-    <hr>
-    <p><a href="index.html"> <<<  Back to all days</a></p>
+    <footer>
+        <p><a href="index.html">← Back to all reports</a></p>
+        <p>Event Context | AI-Powered News Intelligence</p>
+    </footer>
 </body>
 </html>
     

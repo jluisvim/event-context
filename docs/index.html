@@ -4,22 +4,91 @@
     <meta charset="UTF-8">
     <title>Event Context - Archive</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
     <style>
-        body { font-family: -apple-system, sans-serif; max-width: 800px; margin: 40px auto; padding: 20px; }
-        h1 { color: #1a1a1a; }
-        ul { list-style: none; padding: 0; }
-        li { margin: 15px 0; }
-        a { font-size: 1.1em; text-decoration: none; color: #0056b3; }
-        .date { color: #666; font-size: 0.9em; }
+        :root {{
+            --bg: #ffffff;
+            --text: #1a1a1a;
+            --accent: #0056b3;
+            --light: #f8f9fa;
+            --border: #e9ecef;
+        }}
+        body {{
+            font-family: 'Inter', -apple-system, sans-serif;
+            line-height: 1.7;
+            color: var(--text);
+            background: var(--bg);
+            margin: 0;
+            padding: 0;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }}
+        header {{
+            text-align: center;
+            margin-bottom: 40px;
+        }}
+        h1 {{
+            color: var(--accent);
+            margin: 0;
+            font-size: 2.4em;
+            font-weight: 600;
+        }}
+        .subtitle {{
+            font-size: 1.1em;
+            color: #6c757d;
+            margin: 10px 0 0 0;
+        }}
+        .reports {{
+            list-style: none;
+            padding: 0;
+        }}
+        .reports li {{
+            margin: 15px 0;
+            padding: 15px;
+            background: var(--light);
+            border-radius: 10px;
+            border-left: 4px solid var(--accent);
+            transition: background 0.2s;
+        }}
+        .reports li:hover {{
+            background: #f1f3f5;
+        }}
+        .reports a {{
+            text-decoration: none;
+            font-size: 1.1em;
+            color: var(--text);
+            font-weight: 500;
+        }}
+        .date {{
+            color: #6c757d;
+            font-size: 0.9em;
+            margin-left: 10px;
+        }}
+        footer {{
+            text-align: center;
+            margin-top: 60px;
+            color: #6c757d;
+            font-size: 0.9em;
+        }}
     </style>
 </head>
 <body>
-    <h1>📰 Event Context: Daily News Analysis</h1>
-    <p>Automated global news intelligence using BERTopic and RSS feeds.</p>
-    <ul>
-        <li><a href="daily-2025-08-05.html">Daily Report - 2025-08-05</a> <span class="date">2025-08-05</span></li>
-        <li><a href="daily-2025-08-04.html">Daily Report - 2025-08-04</a> <span class="date">2025-08-04</span></li>
-        <li><a href="daily-2025-08-03.html">Daily Report - 2025-08-03</a> <span class="date">2025-08-03</span></li>
+    <header>
+        <h1>📰 Event Context</h1>
+        <p class="subtitle">Daily AI-Powered News Intelligence</p>
+    </header>
+
+    <h2>📋 Archive of Daily Reports</h2>
+    <ul class="reports">
+        <li><a href="daily-2025-08-05.html">Daily Report - 2025-08-05</a> <span class="date">(2025-08-05)</span></li>
+        <li><a href="daily-2025-08-04.html">Daily Report - 2025-08-04</a> <span class="date">(2025-08-04)</span></li>
+        <li><a href="daily-2025-08-03.html">Daily Report - 2025-08-03</a> <span class="date">(2025-08-03)</span></li>
     </ul>
+
+    <footer>
+        <p>Automated analysis using BERTopic and RSS feeds.</p>
+        <p>Generated with ❤️ by Event Context</p>
+    </footer>
 </body>
 </html>
