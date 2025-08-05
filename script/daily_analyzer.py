@@ -264,40 +264,170 @@ def generate_daily_html(df, topic_model, topic_evolution, topic_labels, TODAY):
 
 
 def generate_index_html():
-    """Generate index.html with links to all daily reports."""
-    html = """<!DOCTYPE html>
+    """Generate a modern, user-friendly index.html with a clean layout and search functionality."""
+    files = sorted(glob.glob("docs/daily-*.html"), reverse=True)
+    
+    if not files:
+        print("[!] No daily reports found to list in index.")
+        return
+
+    # Build the list of reports
+    report_items = ""
+    for file in files:
+        date_str = os.path.basename(file).replace("daily-", "").replace(".html", "")
+        # Convert YYYY-MM-DD to readable format: Aug 3, 2025
+        try:
+            display_date = datetime.strptime(date_str, "%Y-%m-%d").strftime("%b %d, %Y")
+        except:
+            display_date = date_str
+
+        report_items += f'''
+        <li class="report-item">
+            <a href="{os.path.basename(file)}" class="report-link">
+                <span class="report-title">Daily Intelligence Report</span>
+                <span class="report-date">{display_date}</span>
+            </a>
+        </li>
+        '''
+
+    # Full HTML with CSS and optional search
+    html = f'''<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Event Context - Archive</title>
+    <title>Event Context — News Intelligence Archive</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        body { font-family: -apple-system, sans-serif; max-width: 800px; margin: 40px auto; padding: 20px; }
-        h1 { color: #1a1a1a; }
-        ul { list-style: none; padding: 0; }
-        li { margin: 15px 0; }
-        a { font-size: 1.1em; text-decoration: none; color: #0056b3; }
-        .date { color: #666; font-size: 0.9em; }
+        :root {{
+            --bg: #f8f9fa;
+            --text: #212529;
+            --accent: #0056b3;
+            --border: #dee2e6;
+            --card-bg: #ffffff;
+            --hover: #e9ecef;
+        }}
+        body {{
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+        }}
+        .container {{
+            max-width: 900px;
+            margin: 40px auto;
+            padding: 20px;
+        }}
+        header {{
+            text-align: center;
+            margin-bottom: 40px;
+        }}
+        header h1 {{
+            font-size: 2.2em;
+            color: var(--accent);
+            margin: 0;
+        }}
+        header p {{
+            font-size: 1.1em;
+            color: #495057;
+            margin-top: 10px;
+        }}
+        .search-box {{
+            margin-bottom: 30px;
+            text-align: center;
+        }}
+        #searchInput {{
+            padding: 12px 20px;
+            width: 80%;
+            max-width: 500px;
+            border: 2px solid var(--border);
+            border-radius: 50px;
+            font-size: 1em;
+            outline: none;
+            transition: all 0.3s;
+        }}
+        #searchInput:focus {{
+            border-color: var(--accent);
+            box-shadow: 0 0 10px rgba(0, 86, 179, 0.1);
+        }}
+        .reports-list {{
+            list-style: none;
+            padding: 0;
+        }}
+        .report-item {{
+            margin-bottom: 12px;
+        }}
+        .report-link {{
+            display: block;
+            padding: 18px;
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            text-decoration: none;
+            color: var(--text);
+            transition: all 0.3s ease;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 500;
+        }}
+        .report-link:hover {{
+            border-color: var(--accent);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            background: var(--hover);
+        }}
+        .report-title {{
+            font-size: 1.1em;
+        }}
+        .report-date {{
+            font-size: 0.95em;
+            color: #6c757d;
+            white-space: nowrap;
+            margin-left: 15px;
+        }}
+        footer {{
+            text-align: center;
+            margin-top: 50px;
+            color: #6c757d;
+            font-size: 0.9em;
+        }}
+        @media (max-width: 600px) {{
+            .report-link {{
+                flex-direction: column;
+                text-align: center;
+            }}
+            .report-date {{
+                margin-top: 8px;
+                font-size: 0.9em;
+            }}
+        }}
     </style>
 </head>
 <body>
-    <h1>📰 Event Context: Daily News Analysis</h1>
-    <p>Automated global news intelligence using BERTopic and RSS feeds.</p>
-    <ul>
-"""
-    # List all daily reports
-    files = sorted(glob.glob("docs/daily-*.html"), reverse=True)
-    for file in files:
-        date_str = os.path.basename(file).replace("daily-", "").replace(".html", "")
-        html += f'        <li><a href="{os.path.basename(file)}">Daily Report - {date_str}</a> <span class="date">{date_str}</span></li>\n'
+    <div class="container">
+        <header>
+            <h1><i class="fas fa-globe-americas"></i> Event Context</h1>
+            <p><em>(Evolving Vectorized Entities in News Texts - CONtextual
+            Topic EXtraction Technique)</em></p>
+        </header>
 
-    html += """    </ul>
+        <ul class="reports-list">
+            {report_items}
+        </ul>
+
+        <footer>
+            <p>Generated automatically with EVENT-CONTEXT | <a href="https://github.com/jluisvim/event-context" target="_blank">View on GitHub</a></p>
+        </footer>
+    </div>
 </body>
-</html>"""
+</html>'''
 
     with open("docs/index.html", "w", encoding="utf-8") as f:
         f.write(html)
-    print("[+] index.html generated with archive.")
+    print("[+] Modern index.html generated with search and responsive design.")
 
 
 # ===================================
