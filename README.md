@@ -1,8 +1,9 @@
 # 🌍 EVENT-CONTEXT
-### *(Evolving Vectorized Entities in News Texts - CONtextual Topic EXtraction Technique)*
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Open Issues](https://img.shields.io/github/issues/jluisvim/event-context)](https://github.com/jluisvim/event-context/issues)
+
+### *(Evolving Vectorized Entities in News Texts - CONtextual Topic EXtraction Technique)*
 
 **EVENT-CONTEXT** is an automated news analysis system that collects global headlines from RSS feeds, applies AI-driven topic modeling (BERTopic), and generates daily intelligence reports with interactive visualizations.
 
