@@ -209,11 +209,20 @@ def plot_semantic_similarity(sim_df, today):
 # ===================================
 
 def generate_daily_html(df, topic_model, topic_evolution, topic_labels, TODAY):
-    """Generate a standalone HTML report for today."""
+    """Generate a modern, responsive HTML report for today."""
     top_topics = df['topic_name'].value_counts().head(6)
     output_path = f"docs/daily-{TODAY}.html"
 
-    # Start HTML content
+    # Generar tarjetas de temas
+    topic_cards = ""
+    for topic, count in top_topics.items():
+        topic_cards += f"""
+        <div class="card">
+            <h3>{topic}</h3>
+            <p class="count">{count} articles</p>
+        </div>
+        """
+
     html = f"""
 <!DOCTYPE html>
 <html lang="en">
@@ -221,39 +230,142 @@ def generate_daily_html(df, topic_model, topic_evolution, topic_labels, TODAY):
     <meta charset="UTF-8">
     <title>Daily News Analysis - {TODAY}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
     <style>
-        body {{ font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; 
-               line-height: 1.6; color: #333; max-width: 900px; margin: 40px auto; padding: 20px; }}
-        h1, h2 {{ color: #1a1a1a; }}
-        iframe {{ width: 100%; height: 500px; border: 1px solid #ddd; margin: 20px 0; }}
-        .meta {{ color: #666; font-size: 0.9em; margin-bottom: 20px; }}
-        .top-topic {{ background: #f8f9fa; padding: 10px 15px; border-left: 4px solid #0056b3; margin: 10px 0; }}
+        :root {{
+            --bg: #ffffff;
+            --text: #1a1a1a;
+            --accent: #0056b3;
+            --light: #f8f9fa;
+            --border: #e9ecef;
+        }}
+        body {{
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            line-height: 1.7;
+            color: var(--text);
+            background: var(--bg);
+            margin: 0;
+            padding: 0;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }}
+        header {{
+            text-align: center;
+            padding: 40px 20px;
+            background: linear-gradient(135deg, #0056b3 0%, #003d82 100%);
+            color: white;
+            border-radius: 12px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }}
+        h1 {{
+            margin: 0;
+            font-weight: 600;
+            font-size: 2.2em;
+        }}
+        .meta {{
+            font-size: 0.9em;
+            opacity: 0.9;
+            margin-top: 8px;
+        }}
+        .top-topics {{
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 40px 0;
+        }}
+        .card {{
+            background: var(--light);
+            border-radius: 10px;
+            padding: 20px;
+            border-left: 4px solid var(--accent);
+            transition: transform 0.2s;
+        }}
+        .card:hover {{
+            transform: translateY(-4px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.05);
+        }}
+        .card h3 {{
+            margin: 0 0 10px 0;
+            font-size: 1.2em;
+            color: var(--accent);
+        }}
+        .card .count {{
+            margin: 0;
+            font-weight: 500;
+            color: #495057;
+        }}
+        .section {{
+            margin: 40px 0;
+            padding: 20px;
+            background: #fbfbfb;
+            border-radius: 10px;
+            border: 1px solid var(--border);
+        }}
+        .section h2 {{
+            color: var(--accent);
+            border-bottom: 2px solid var(--accent);
+            padding-bottom: 8px;
+            margin-top: 0;
+        }}
+        iframe {{
+            width: 100%;
+            height: 500px;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            margin: 15px 0;
+        }}
+        img {{
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }}
+        footer {{
+            text-align: center;
+            margin-top: 50px;
+            padding: 20px;
+            color: #6c757d;
+            font-size: 0.9em;
+        }}
+        @media (max-width: 768px) {{
+            .top-topics {{
+                grid-template-columns: 1fr;
+            }}
+        }}
     </style>
 </head>
 <body>
-    <h1>🌍 Daily News Analysis - {TODAY}</h1>
-    <div class="meta">Generated: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')} UTC | Articles: {len(df)}</div>
+    <header>
+        <h1>🌍 Daily News Analysis - {TODAY}</h1>
+        <div class="meta">Generated: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')} UTC | Articles: {len(df)}</div>
+    </header>
 
     <h2>🔝 Top Topics Today</h2>
-    <ul>
-"""
-    for topic, count in top_topics.items():
-        html += f"<li><strong>{topic}</strong>: {count} articles</li>\n"
+    <div class="top-topics">
+        {topic_cards}
+    </div>
 
-    html += f"""
-    </ul>
+    <div class="section">
+        <h2>📊 Topic Evolution Over Time</h2>
+        <iframe src="assets/{TODAY}/topic_evolution.html" title="Topic Evolution"></iframe>
+    </div>
 
-    <h2>📊 Topic Evolution Over Time</h2>
-    <iframe src="assets/{TODAY}/topic_evolution.html" title="Topic Evolution"></iframe>
+    <div class="section">
+        <h2>🔗 Topic Co-occurrence Matrix</h2>
+        <img src="assets/{TODAY}/cooccurrence.png" alt="Co-occurrence Matrix">
+    </div>
 
-    <h2>🔗 Topic Co-occurrence Matrix</h2>
-    <p><img src="assets/{TODAY}/cooccurrence.png" alt="Co-occurrence" style="max-width:100%;"></p>
+    <div class="section">
+        <h2>🧠 Semantic Similarity</h2>
+        <img src="assets/{TODAY}/semantic_similarity.png" alt="Semantic Similarity">
+    </div>
 
-    <h2>🧠 Semantic Similarity</h2>
-    <p><img src="assets/{TODAY}/semantic_similarity.png" alt="Semantic Similarity" style="max-width:100%;"></p>
-
-    <hr>
-    <p><a href="index.html"> <<<  Back to all days</a></p>
+    <footer>
+        <p><a href="index.html">← Back to all reports</a></p>
+        <p>Event Context | AI-Powered News Intelligence</p>
+    </footer>
 </body>
 </html>
     """
@@ -264,40 +376,110 @@ def generate_daily_html(df, topic_model, topic_evolution, topic_labels, TODAY):
 
 
 def generate_index_html():
-    """Generate index.html with links to all daily reports."""
+    """Generate a modern index.html with archive of daily reports."""
     html = """<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Event Context - Archive</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
     <style>
-        body { font-family: -apple-system, sans-serif; max-width: 800px; margin: 40px auto; padding: 20px; }
-        h1 { color: #1a1a1a; }
-        ul { list-style: none; padding: 0; }
-        li { margin: 15px 0; }
-        a { font-size: 1.1em; text-decoration: none; color: #0056b3; }
-        .date { color: #666; font-size: 0.9em; }
+        :root {{
+            --bg: #ffffff;
+            --text: #1a1a1a;
+            --accent: #0056b3;
+            --light: #f8f9fa;
+            --border: #e9ecef;
+        }}
+        body {{
+            font-family: 'Inter', -apple-system, sans-serif;
+            line-height: 1.7;
+            color: var(--text);
+            background: var(--bg);
+            margin: 0;
+            padding: 0;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }}
+        header {{
+            text-align: center;
+            margin-bottom: 40px;
+        }}
+        h1 {{
+            color: var(--accent);
+            margin: 0;
+            font-size: 2.4em;
+            font-weight: 600;
+        }}
+        .subtitle {{
+            font-size: 1.1em;
+            color: #6c757d;
+            margin: 10px 0 0 0;
+        }}
+        .reports {{
+            list-style: none;
+            padding: 0;
+        }}
+        .reports li {{
+            margin: 15px 0;
+            padding: 15px;
+            background: var(--light);
+            border-radius: 10px;
+            border-left: 4px solid var(--accent);
+            transition: background 0.2s;
+        }}
+        .reports li:hover {{
+            background: #f1f3f5;
+        }}
+        .reports a {{
+            text-decoration: none;
+            font-size: 1.1em;
+            color: var(--text);
+            font-weight: 500;
+        }}
+        .date {{
+            color: #6c757d;
+            font-size: 0.9em;
+            margin-left: 10px;
+        }}
+        footer {{
+            text-align: center;
+            margin-top: 60px;
+            color: #6c757d;
+            font-size: 0.9em;
+        }}
     </style>
 </head>
 <body>
-    <h1>📰 Event Context: Daily News Analysis</h1>
-    <p>Automated global news intelligence using BERTopic and RSS feeds.</p>
-    <ul>
+    <header>
+        <h1>📰 Event Context</h1>
+        <p class="subtitle">Daily AI-Powered News Intelligence</p>
+    </header>
+
+    <h2>📋 Archive of Daily Reports</h2>
+    <ul class="reports">
 """
-    # List all daily reports
+
+    # Listar todos los informes
     files = sorted(glob.glob("docs/daily-*.html"), reverse=True)
     for file in files:
         date_str = os.path.basename(file).replace("daily-", "").replace(".html", "")
-        html += f'        <li><a href="{os.path.basename(file)}">Daily Report - {date_str}</a> <span class="date">{date_str}</span></li>\n'
+        html += f'        <li><a href="{os.path.basename(file)}">Daily Report - {date_str}</a> <span class="date">({date_str})</span></li>\n'
 
     html += """    </ul>
+
+    <footer>
+        <p>Automated analysis using BERTopic and RSS feeds.</p>
+        <p>Generated with ❤️ by Event Context</p>
+    </footer>
 </body>
 </html>"""
 
     with open("docs/index.html", "w", encoding="utf-8") as f:
         f.write(html)
-    print("[+] index.html generated with archive.")
+    print("[+] index.html generated with modern design.")
 
 
 # ===================================
